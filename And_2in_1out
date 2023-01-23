@@ -1,0 +1,18 @@
+library ieee;
+use ieee.std_logic_1164.all;
+
+--Entity
+entity And_2in_1out is
+	--generic( n: integer := 48);--<-- nbits
+	Port(
+		  I1,I2: in std_logic;
+		  Q:    out std_logic
+		  );
+end And_2in_1out;
+
+--Architecture
+Architecture solve of And_2in_1out is
+	-- Signals,Constants,Variables,Components
+	Begin
+   Q <= I1 and I2;			
+end solve;
