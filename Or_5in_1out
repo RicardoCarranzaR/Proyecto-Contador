@@ -1,0 +1,18 @@
+library ieee;
+use ieee.std_logic_1164.all;
+
+--Entity
+entity Or_5in_1out is
+	--generic( n: integer := 48);--<-- nbits
+	Port(
+		  I1,I2,I3,I4,I5: in std_logic;
+		  Q:    out std_logic
+		  );
+end Or_5in_1out;
+
+--Architecture
+Architecture solve of Or_5in_1out is
+	-- Signals,Constants,Variables,Components
+	Begin
+   Q <= I1 or I2 or I3 or I4 or I5;			
+end solve;
