@@ -1,0 +1,32 @@
+library ieee;
+use ieee.std_logic_1164.all;
+
+--Entity
+entity Mux5a1_esp is
+	generic ( n: integer:= 9);--<-- nbits
+	port(
+		A : in std_logic_vector(n-1 downto 0);
+		B : in std_logic_vector(n-1 downto 0);
+		C : in std_logic_vector(n-1 downto 0);
+		D : in std_logic_vector(n-1 downto 0);
+		E : in std_logic_vector(n-1 downto 0);
+		F : in std_logic_vector(n-1 downto 0);
+		sel : in std_logic_vector(4 downto 0);
+		en: in std_logic;
+		Q : out std_logic_vector(n-1 downto 0));
+end Mux5a1_esp;
+
+--Architecture
+architecture solve of Mux5a1_esp is
+	-- Signals,Constants,Variables,Components
+	signal X: std_logic_vector(n-1 downto 0);
+	begin
+		with sel select 
+		X<= A when "00001",
+			 B when "00010",
+			 C when "00100",
+			 D when "01000",
+			 E when "10000",
+			 F when others;
+		Q<= X when en ='1' else (others=>'0');	 
+end solve;
