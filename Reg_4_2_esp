@@ -1,0 +1,30 @@
+library ieee;
+use ieee.std_logic_1164.all;
+
+--Entity
+entity Reg_4_2_esp is
+	port(
+		Clk,resetn,en: in std_logic;
+		di: in std_logic_vector(4 downto 0);
+		q: out std_logic_vector(4 downto 0));
+end Reg_4_2_esp;
+
+--Architecture
+architecture solve of Reg_4_2_esp is
+	-- Signals,Constants,Variables,Components
+	signal h: std_logic_vector(4 downto 0);
+	begin
+	--Process #1
+	process(resetn,clk)
+	--Sequential programming
+		begin
+			if resetn ='0' then
+				h <= "00000";
+			elsif clk'event and clk='1' then
+				if en ='1' then
+					h <= di;
+				end if;
+			end if;
+	end process;
+	q <= h;
+end solve;
