@@ -1,0 +1,38 @@
+library ieee;
+use ieee.std_logic_1164.all;
+
+--Entity
+entity Separador_2 is
+	Port(
+		  Data:   in std_logic_vector(39 downto 0);
+		  Q0:    out std_logic_vector(7 downto 0);
+		  Q1:    out std_logic_vector(27 downto 0);
+		  Q2:    out std_logic_vector(3 downto 0));
+end Separador_2;
+
+--Architecture
+Architecture solve of Separador_2 is
+	Begin
+   Q0(7) <= Data(39); Q0(6) <= Data(38); 
+	Q0(5) <= Data(37); Q0(4) <= Data(36); 
+	Q0(3) <= Data(35); Q0(2) <= Data(34); 
+	Q0(1) <= Data(33);Q0(0) <= Data(32);
+	
+	Q1(27) <= Data(31); Q1(26) <= Data(30);
+	Q1(25) <= Data(29); Q1(24) <= Data(28); 
+	Q1(23) <= Data(27); Q1(22) <= Data(26); 
+	Q1(21) <= Data(25); Q1(20) <= Data(24); 
+	Q1(19) <= Data(23); Q1(18) <= Data(22); 
+	Q1(17) <= Data(21); Q1(16) <= Data(20);
+	Q1(15) <= Data(19); Q1(14) <= Data(18); 
+	Q1(13) <= Data(17); Q1(12) <= Data(16); 
+	Q1(11) <= Data(15); Q1(10) <= Data(14); 
+	Q1(9) <= Data(13);  Q1(8) <= Data(12);  
+	Q1(7) <= Data(11);  Q1(6) <= Data(10);
+	Q1(5) <= Data(9);  Q1(4) <= Data(8);   
+	Q1(3) <= Data(7);   Q1(2) <= Data(6);   
+	Q1(1) <= Data(5);   Q1(0) <= Data(4);	
+	
+	Q2(3) <= Data(3); Q2(2) <= Data(2); 
+	Q2(1) <= Data(1); Q2(0) <= Data(0);
+end solve;
