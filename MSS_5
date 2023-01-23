@@ -1,0 +1,63 @@
+library ieee;
+use ieee.std_logic_1164.all;
+
+entity MSS_5 is
+	port(
+		  resetn,Clk,Start: in std_logic;est: out std_logic_vector(3 downto 0);
+		  Led_enc,Led_prov,en_C_ld,en_comp_cont: out std_logic;en_1,en_2,en_3,en_4,en_5: out std_logic;
+		  en_Mux,Fin_Conteo,en_dis,ld_c_LD,wren: out std_logic;A_ig_B,Q0,Q1,Q2,Q3,Q4,button: in std_logic;
+		  data: out std_logic_vector(39 downto 0);p1,p2,p3,p4,p5: in std_logic;
+		  selec: out std_logic_vector(4 downto 0);en_reg_butt :out std_logic
+		  );
+end MSS_5;
+architecture solucion of MSS_5 is
+	type estado is (s0,s1,s2,s3,s4,s5,s6,s7);
+	signal y: estado;
+	begin
+		process(resetn,Clk)
+			begin
+			if resetn = '0' then y<= s0;
+			elsif (clk'event and clk = '1') then
+			  case y is
+					when s0 => if Start = '0'	then y <= s0;
+					           else y <= s1; end if;
+					when s1 => if Start = '1'	then y <= s1;
+					           else y <= s2;
+								  end if;							  
+					when s2 => y <= s3;
+					when s3 => y <= s4;
+					when s4 => if A_ig_B = '1'	then y <= s5;
+					           else y <= s2;
+								  end if;
+					when s5 => y <= s6;
+					when s6 => if button = '1'	then y <= s7;
+					           else y <= s6;
+								  end if;
+					when s7 => y <= s6;
+				end case;
+			end if;
+	end process;
+	process(y)
+		begin
+		    Led_enc<= '0';en_C_ld <= '0';en_comp_cont <= '0';en_1 <= '0';en_2 <= '0';en_3 <= '0';en_4 <= '0';en_5 <= '0';
+			 en_Mux<= '1';Fin_Conteo <= '0';en_dis<= '0';Led_prov<= '0';est<="0000";
+			 ld_c_LD<= '0';wren<= '0';data <="0000000000000000000000000000000000000000";en_reg_butt <='0';selec <= "00000";
+			case y is
+				when s0 => est<="0000";
+				when s1 => est<="0001";Led_enc <='1';
+				when s2 => est<="0010";Led_enc <='1';
+				when s3 => est<="0011";Led_enc <='1';en_comp_cont <='1';
+				           if Q0 = '1' then en_1 <='1';elsif Q1 = '1' then en_2 <='1';
+							  elsif Q2 = '1' then en_3 <='1';elsif Q3 = '1' then en_4 <='1';
+							  elsif Q4 = '1' then en_5 <='1';end if;
+				when s4 => est<="0100";Led_enc <='1';en_C_ld <='1';
+				when s5 => est<="0101";Led_enc <='1';Fin_Conteo <='1';
+				when s6 => est<="0110";Led_enc <='1';en_dis<= '1';Led_prov<= '1';en_reg_butt <='1';
+				           if p1 = '1' then selec <= "00001";elsif p2 = '1'then selec <= "00010";
+							  elsif p3 = '1' then selec <= "00100";elsif p4 = '1'then selec <= "01000";
+							  elsif p5 = '1' then selec <= "10000";else  selec <= "00000";end if;
+				when s7 => est<="0111";Led_enc <='1';en_dis<= '1';Led_prov<= '1';
+			end case;
+	end process;
+	--Process #n... 
+end solucion;
